@@ -1,15 +1,12 @@
 <?php require_once 'parts/header.php'; ?>
 
 <div class="container w-25 mt-5">
-    <h1>Nouvelle notation</h1>
+    <h1>Nouvel établissement</h1>
 
-    <form action="scripts/feedback-create.php" method="POST">
+    <form action="scripts/building-create.php" method="POST">
         <div class="mb-3">
-            <input type="hidden" name="building" value="<?= $_GET['building_id'] ?>">
-            <input class="form-control" type="number" name="note" value="1" min="1" max="5" required>
-            <input class="form-control mt-3" placeholder="pseudo" type="text" name="name" required>
-            <input class="form-control mt-3" placeholder="email" type="email" name="email" required>
-            <textarea class="form-control mt-3" name="message" placeholder="votre message" required></textarea>
+            <input class="form-control" type="text" name="name" placeholder="Nom" required>
+            <input class="form-control mt-3" placeholder="Adresse" type="text" name="adress" required>
         </div>
 
         <?php if(isset($_GET['error'])) : ?>

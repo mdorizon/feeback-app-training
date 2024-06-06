@@ -9,7 +9,14 @@
     <script defer src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.min.js" integrity="sha512-WW8/jxkELe2CAiE4LvQfwm1rajOS8PHasCCx+knHG0gBHt8EXxS6T6tJRTGuDQVnluuAvMxWF4j8SNFDKceLFg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
 </head>
 <body>
-    <nav class="text-center p-3 gap-5">
-        <a href="./index.php?filter=">Notes</a>
-        <a href="./new-feedback.php">Ajouter une note</a>
+    <nav class="text-center p-3 gap-5 d-flex justify-content-between">
+        <div>
+            <a href="./index.php">établissements</a>
+        </div>
+        <a href=""></a>
+        <style>
+            a {
+                text-decoration: none;
+            }
+        </style>
     </nav>
