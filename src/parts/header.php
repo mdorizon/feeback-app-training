@@ -10,6 +10,6 @@
 </head>
 <body>
     <nav class="text-center p-3 gap-5">
-        <a href="./index.php">Notes</a>
+        <a href="./index.php?filter=">Notes</a>
         <a href="./new-feedback.php">Ajouter une note</a>
     </nav>
