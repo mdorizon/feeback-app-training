@@ -19,16 +19,20 @@ if(empty($_POST['password'])) {
 }
 
 // connect to db with PDO
-$connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
-// prepare request
-$request = $connectDatabase->prepare("INSERT INTO user (username, email, password) VALUES (:username, :email, :password)");
-// bind params
-$request->bindParam(':username', $_POST['username']);
-$request->bindParam(':email', $_POST['email']);
-$request->bindParam(':password', $hash_password);
-// execute request
-$request->execute();
-
+try {
+    $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
+    // prepare request
+    $request = $connectDatabase->prepare("INSERT INTO user (username, email, password) VALUES (:username, :email, :password)");
+    // bind params
+    $request->bindParam(':username', $_POST['username']);
+    $request->bindParam(':email', $_POST['email']);
+    $request->bindParam(':password', $hash_password);
+    // execute request
+    $request->execute();
+} catch (\Throwable $th) {
+    header("Location: ../signup.php?error=Adresse email déjà utilisée !");
+    die(); 
+}
 // connect to db
 $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
 // prepare request
