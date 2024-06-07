@@ -27,6 +27,7 @@
                 <?php if(!empty($isUserBuilding)): ?>
                     <?php if($isUserBuilding['id'] == $building['user_building_id']): ?>
                         <a class="text-danger mt-1 ms-3" href="./modify-building.php?building_user_id=<?= $building['user_building_id'] ?>&building_id=<?= $building['id'] ?>">modifier ✎</a>
+                        <a class="text-danger mt-1 ms-3" href="./scripts/building-delete.php?building_user_id=<?= $building['user_building_id'] ?>&building_id=<?= $building['id'] ?>">supprimer ♻︎</a>
                     <?php endif;  ?>
                 <?php endif; ?>
                 <a class="card-body" href="./single-building.php?building_id=<?= $building['id'] ?>&filter=">
