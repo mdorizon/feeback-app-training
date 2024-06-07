@@ -72,7 +72,8 @@
                     </div>
                     <h5 class="card-subtitle mb-2 text-muted"><?= $feedback['name'] ?></h5>
                     <p class="card-text"><?= $feedback['message'] ?></p>
-                    <p class="card-text"><small class="text-body-secondary">Note donnée le : <?= $feedback['created_at'] ?></small></p>
+                    <?php $date = new DateTimeImmutable($feedback['created_at']); ?>
+                    <p class="card-text"><small class="text-body-secondary">Note donnée le : <?= $date->format('d-m-Y'); ?></small></p>
                 </div>
             </a>
         <?php endforeach; ?>

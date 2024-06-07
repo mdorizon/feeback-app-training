@@ -20,7 +20,8 @@
                 <div class="card-body">
                     <h5 class="card-subtitle mb-2 text-muted"><?= $user['username'] ?></h5>
                     <p class="card-text"><small class="text-body-secondary">Nombre d'avis: <?= $user['feedback_count'] ?></small></p>
-                    <p class="card-text"><small class="text-body-secondary">Compte crée le : <?= $user['created_at'] ?></small></p>
+                    <?php $date = new DateTimeImmutable($user['created_at']); ?>
+                    <p class="card-text"><small class="text-body-secondary">Compte crée le : <?= $date->format('d-m-Y'); ?></small></p>
                 </div>
             </a>
         <?php endforeach; ?>
