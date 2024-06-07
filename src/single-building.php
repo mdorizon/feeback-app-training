@@ -17,10 +17,18 @@
             $filter = "created_at DESC";
             break;
     }
+
+    // check if user client
+    $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
+    $requestUserBuilding = $connectDatabase->prepare("SELECT * FROM user_client WHERE user_id = :id");
+    $requestUserBuilding->bindParam(':id', $_SESSION['id']);
+    $requestUserBuilding->execute();
+    $isUserClient = $requestUserBuilding->fetch(PDO::FETCH_ASSOC);
+
     // connect to db
     $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
     // prepare request
-    $request = $connectDatabase->prepare("SELECT feedback.*, user.username FROM feedback JOIN user ON feedback.user_id = user.id where building_id = :id ORDER BY {$filter}");
+    $request = $connectDatabase->prepare("SELECT feedback.*, user.username FROM feedback JOIN user_client ON feedback.user_client_id = user_client.id JOIN user ON user_client.user_id = user.id where building_id = :id ORDER BY {$filter}");
     // bindParams
     $request->bindParam(':id', $_GET['building_id']);
     // execute request
@@ -70,8 +78,10 @@
             </div>
         <?php endforeach; ?>
     </div>
-    <?php if(isset($_SESSION['username'])) : ?>
-        <a href="./new-feedback.php?building_id=<?= $_GET['building_id']?>" class="mt-5">Ajouter une note à l'établissement</a>
+    <?php if(!empty($isUserClient)) : ?>
+        <?php if(isset($_SESSION['username'])) : ?>
+            <a href="./new-feedback.php?building_id=<?= $_GET['building_id']?>" class="mt-5">Ajouter une note à l'établissement</a>
+        <?php endif; ?>
     <?php endif; ?>
 </section>
 

@@ -3,6 +3,18 @@
         header("Location: ../index.php");
     } 
 ?>
+<?php 
+    // check if user client
+    $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
+    $requestUserBuilding = $connectDatabase->prepare("SELECT * FROM user_client WHERE user_id = :id");
+    $requestUserBuilding->bindParam(':id', $_SESSION['id']);
+    $requestUserBuilding->execute();
+    $isUserClient = $requestUserBuilding->fetch(PDO::FETCH_ASSOC);
+    if(empty($isUserClient)) {
+        header("Location: ../index.php");
+        die(); 
+    }
+?>
 <?php require_once 'parts/header.php'; ?>
 
 <div class="container w-25 mt-5">

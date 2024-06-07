@@ -3,7 +3,7 @@
     // connect to db
     $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
     // prepare request
-    $request = $connectDatabase->prepare("SELECT user.id, user.username, user.created_at, COUNT(feedback.id) AS feedback_count FROM user LEFT JOIN feedback ON user.id = feedback.user_id GROUP BY user.id, user.username;");
+    $request = $connectDatabase->prepare("SELECT user.id, user.username, user.created_at, COUNT(feedback.id) AS feedback_count FROM user JOIN user_client ON user.id = user_client.user_id JOIN feedback ON feedback.user_client_id = user_client.id GROUP BY user.id, user.username");
     // execute request
     $request->execute();
     // fetch all data from table posts

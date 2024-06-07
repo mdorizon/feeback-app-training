@@ -8,6 +8,13 @@
     $request->execute();
     // fetch all data from table posts
     $result = $request->fetchAll(PDO::FETCH_ASSOC);
+
+    // check if user building
+    $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
+    $requestUserBuilding = $connectDatabase->prepare("SELECT * FROM user_building WHERE user_id = :id");
+    $requestUserBuilding->bindParam(':id', $_SESSION['id']);
+    $requestUserBuilding->execute();
+    $isUserBuilding = $requestUserBuilding->fetch(PDO::FETCH_ASSOC);
 ?>
 
 <?php require_once 'parts/header.php'; ?>
@@ -34,7 +41,9 @@
             </a>
         <?php endforeach; ?>
     </div>
-    <a href="./new-building.php" class="mt-5">Ajouter un nouvel établissement</a>
+    <?php if(!empty($isUserBuilding)) : ?>
+        <a href="./new-building.php" class="mt-5">Ajouter un nouvel établissement</a>
+    <?php endif; ?>
 </section>
 
 <?php require_once 'parts/footer.php'; ?>

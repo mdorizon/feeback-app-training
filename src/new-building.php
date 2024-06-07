@@ -1,4 +1,16 @@
 <?php session_start(); ?>
+<?php 
+    // check if user building
+    $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
+    $requestUserBuilding = $connectDatabase->prepare("SELECT * FROM user_building WHERE user_id = :id");
+    $requestUserBuilding->bindParam(':id', $_SESSION['id']);
+    $requestUserBuilding->execute();
+    $isUserBuilding = $requestUserBuilding->fetch(PDO::FETCH_ASSOC);
+    if(empty($isUserBuilding)) {
+        header("Location: ../index.php");
+        die(); 
+    }
+?>
 <?php require_once 'parts/header.php'; ?>
 
 <div class="container w-25 mt-5">

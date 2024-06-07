@@ -17,12 +17,18 @@
             $filter = "created_at DESC";
             break;
     }
+    // get user client
+    $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
+    $requestUserBuilding = $connectDatabase->prepare("SELECT * FROM user_client WHERE user_id = :id");
+    $requestUserBuilding->bindParam(':id', $_GET['userid']);
+    $requestUserBuilding->execute();
+    $getUserClient = $requestUserBuilding->fetch(PDO::FETCH_ASSOC);
     // connect to db
     $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
     // prepare request
-    $request = $connectDatabase->prepare("SELECT feedback.*, building.name FROM feedback JOIN building ON feedback.building_id = building.id WHERE feedback.user_id = :id ORDER BY {$filter}");
+    $request = $connectDatabase->prepare("SELECT feedback.*, building.name FROM feedback JOIN building ON feedback.building_id = building.id WHERE feedback.user_client_id = :id ORDER BY {$filter}");
     // bindParams
-    $request->bindParam(':id', $_GET['userid']);
+    $request->bindParam(':id', $getUserClient['id']);
     // execute request
     $request->execute();
     // fetch all data from table posts
