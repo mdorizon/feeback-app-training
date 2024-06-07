@@ -16,7 +16,7 @@
     <h2 class="mb-5">Liste des utilisateurs</h2>
     <div class="feedback-list col-9 d-flex gap-4 mb-5 flex-wrap">
         <?php foreach($result as $user): ?>
-            <a class="card" style="width: 18rem;" href="">
+            <a class="card" style="width: 18rem;" href="./single-user.php?userid=<?= $user['id'] ?>&filter=">
                 <div class="card-body">
                     <h5 class="card-subtitle mb-2 text-muted"><?= $user['username'] ?></h5>
                     <p class="card-text"><small class="text-body-secondary">Nombre d'avis: <?= $user['feedback_count'] ?></small></p>
