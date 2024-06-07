@@ -12,8 +12,18 @@
     <nav class="text-center p-3 gap-5 d-flex justify-content-between">
         <div>
             <a href="./index.php">établissements</a>
+            <a href="./userslist.php">Utilisateurs</a>
         </div>
-        <a href=""></a>
+        <div>
+            <?php if(!isset($_SESSION['username'])) : ?>
+                <a href="signin.php">Se connecter</a>
+                <a href="signup.php">S'inscrire</a>
+            <?php endif; ?>
+            <?php if(isset($_SESSION["username"])) : ?>
+                <p>connecté en tant que: <?= $_SESSION["username"]; ?></p>
+                <a href="scripts/disconnect.php">se déconnecter</a>
+            <?php endif; ?>
+        </div>
         <style>
             a {
                 text-decoration: none;

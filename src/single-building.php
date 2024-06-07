@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <?php
     switch ($_GET['filter']) {
         case 'desc':
@@ -19,7 +20,7 @@
     // connect to db
     $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
     // prepare request
-    $request = $connectDatabase->prepare("SELECT * FROM feedback where building_id = :id ORDER BY {$filter}");
+    $request = $connectDatabase->prepare("SELECT feedback.*, user.username FROM feedback JOIN user ON feedback.user_id = user.id where building_id = :id ORDER BY {$filter}");
     // bindParams
     $request->bindParam(':id', $_GET['building_id']);
     // execute request
@@ -61,14 +62,16 @@
                             <?php endfor; ?>
                         <?php endif; ?>
                     </div>
-                    <h5 class="card-subtitle mb-2 text-muted"><?= $feedback['name'] ?></h5>
+                    <h5 class="card-subtitle mb-2 text-muted"><?= $feedback['username'] ?></h5>
                     <p class="card-text"><?= $feedback['message'] ?></p>
                     <p class="card-text"><small class="text-body-secondary">Note donnée le : <?= $feedback['created_at'] ?></small></p>
                 </div>
             </div>
         <?php endforeach; ?>
     </div>
-    <a href="./new-feedback.php?building_id=<?= $_GET['building_id']?>" class="mt-5">Ajouter une note à l'établissement</a>
+    <?php if(isset($_SESSION['username'])) : ?>
+        <a href="./new-feedback.php?building_id=<?= $_GET['building_id']?>" class="mt-5">Ajouter une note à l'établissement</a>
+    <?php endif; ?>
 </section>
 
 <?php require_once 'parts/footer.php'; ?>

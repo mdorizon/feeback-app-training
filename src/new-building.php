@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <?php require_once 'parts/header.php'; ?>
 
 <div class="container w-25 mt-5">

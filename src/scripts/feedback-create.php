@@ -1,24 +1,13 @@
 <?php
     session_start();
+    if(!isset($_SESSION['username'])) {
+        header("Location: ../index.php");
+    }
 
-    $name        = $_POST['name'];
-    $email       = $_POST['email'];
     $message     = $_POST['message'];
     $note        = $_POST['note'];
     $building    = $_POST['building'];
 
-    if(empty($name)) {
-        header("Location: ../new-feedback.php?error=Veuillez renseigner un nom");
-        die();
-    }
-    if (empty($email)) {
-        header("Location: ../new-feedback.php?error=Veuillez renseigner un email");
-        die();
-    }
-    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
-        header("Location: ../new-feedback.php?error=Veuillez renseigner un email valide");
-        die();
-    }
     if(empty($message)) {
         header("Location: ../new-feedback.php?error=Veuillez renseigner un message");
         die();
@@ -31,10 +20,9 @@
     // connect to db with PDO
     $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
     // prepare request
-    $request = $connectDatabase->prepare("INSERT INTO feedback (name, email, message, note, building_id) VALUES (:name, :email, :message, :note, :building)");
+    $request = $connectDatabase->prepare("INSERT INTO feedback (message, note, building_id, user_id) VALUES (:message, :note, :building, :user_id)");
     // bind params
-    $request->bindParam(':name', $name);
-    $request->bindParam(':email', $email);
+    $request->bindParam(':user_id', $_SESSION['id']);
     $request->bindParam(':message', $message);
     $request->bindParam(':note', $note);
     $request->bindParam(':building', $building);

@@ -1,3 +1,4 @@
+<?php session_start(); ?>
 <?php
     // connect to db
     $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
