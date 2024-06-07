@@ -5,7 +5,7 @@
     <h1>Signin page</h1>
     <form action="scripts/login.php" method="POST" class="mb-3 mt-3">
         <div class="mb-3">
-            <input type="text" class="form-control" placeholder="Enter Username" name="username">
+            <input type="email" class="form-control" placeholder="Enter email" name="email">
         </div>
         <div class="mb-3">
             <input type="password" class="form-control" placeholder="Enter password" name="password">

@@ -7,6 +7,9 @@
             <input type="text" class="form-control" placeholder="Enter Username" name="username">
         </div>
         <div class="mb-3">
+            <input type="email" class="form-control" placeholder="Enter Email" name="email">
+        </div>
+        <div class="mb-3">
             <input type="password" class="form-control" placeholder="Enter password" name="password">
         </div>
         <?php if(isset($_GET['error'])) : ?>

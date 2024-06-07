@@ -1,7 +1,11 @@
 <?php 
 
-if(empty($_POST['username'])) {
-    header("Location: ../signin.php?error=Veuillez renseigner un nom d'utilisateur");
+if (empty($_POST['email'])) {
+    header("Location: ../signin.php?error=Veuillez renseigner un email");
+    die();
+}
+if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    header("Location: ../signin.php?error=Veuillez renseigner un email valide");
     die();
 }
 if(empty($_POST['password'])) {
@@ -12,9 +16,9 @@ if(empty($_POST['password'])) {
 // connect to db
 $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
 // prepare request
-$request = $connectDatabase->prepare("SELECT * FROM user WHERE username = :username");
+$request = $connectDatabase->prepare("SELECT * FROM user WHERE email = :email");
 // bindparams (pour proteger des injections)
-$request->bindParam(':username', $_POST['username']);
+$request->bindParam(':email', $_POST['email']);
 // execute request
 $request->execute();
 $result = $request->fetch(PDO::FETCH_ASSOC);
@@ -32,7 +36,7 @@ if(!$isValidPassword) {
 }
 
 session_start();
-$_SESSION["username"]=$_POST['username'];
+$_SESSION["username"]=$result['username'];
 $_SESSION["id"]= $result['id'];
 
 header("Location: ../index.php");

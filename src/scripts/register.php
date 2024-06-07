@@ -5,6 +5,14 @@ if(empty($_POST['username'])) {
     header("Location: ../signup.php?error=Veuillez renseigner un nom d'utilisateur");
     die();
 }
+if (empty($_POST['email'])) {
+    header("Location: ../signin.php?error=Veuillez renseigner un email");
+    die();
+}
+if (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
+    header("Location: ../signin.php?error=Veuillez renseigner un email valide");
+    die();
+}
 if(empty($_POST['password'])) {
     header("Location: ../signup.php?error=Veuillez renseigner un mot de passe");
     die(); 
@@ -13,9 +21,10 @@ if(empty($_POST['password'])) {
 // connect to db with PDO
 $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
 // prepare request
-$request = $connectDatabase->prepare("INSERT INTO user (username, password) VALUES (:username, :password)");
+$request = $connectDatabase->prepare("INSERT INTO user (username, email, password) VALUES (:username, :email, :password)");
 // bind params
 $request->bindParam(':username', $_POST['username']);
+$request->bindParam(':email', $_POST['email']);
 $request->bindParam(':password', $hash_password);
 // execute request
 $request->execute();
@@ -23,9 +32,9 @@ $request->execute();
 // connect to db
 $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
 // prepare request
-$request = $connectDatabase->prepare("SELECT * FROM user WHERE username = :username");
+$request = $connectDatabase->prepare("SELECT * FROM user WHERE email = :email");
 // bindparams (pour proteger des injections)
-$request->bindParam(':username', $_POST['username']);
+$request->bindParam(':email', $_POST['email']);
 // execute request
 $request->execute();
 $result = $request->fetch(PDO::FETCH_ASSOC);
