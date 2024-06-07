@@ -22,23 +22,28 @@
 <section class="buildings d-flex flex-column align-items-center mt-5">
     <h2 class="mb-5">Liste des établissements</h2>
     <div class="feedback-list col-9 d-flex gap-4 mb-5 flex-wrap">
-        <?php foreach($result as $feedback): ?>
-            <a class="card" style="width: 18rem;" href="./single-building.php?building_id=<?= $feedback['id'] ?>&filter=">
-                <div class="card-body">
+        <?php foreach($result as $building): ?>
+            <div class="card" style="width: 18rem;">
+                <?php if(!empty($isUserBuilding)): ?>
+                    <?php if($isUserBuilding['id'] == $building['user_building_id']): ?>
+                        <a class="text-danger mt-1 ms-3" href="./modify-building.php?building_user_id=<?= $building['user_building_id'] ?>&building_id=<?= $building['id'] ?>">modifier ✎</a>
+                    <?php endif;  ?>
+                <?php endif; ?>
+                <a class="card-body" href="./single-building.php?building_id=<?= $building['id'] ?>&filter=">
                     <div class="notation d-flex gap-1">
-                        <?php for($i = 1; $i <= $feedback['review_moy']; $i++): ?>
+                        <?php for($i = 1; $i <= $building['review_moy']; $i++): ?>
                             <h5 class="card-title text-warning">★</h5>
                         <?php endfor; ?>
-                        <?php if($feedback['review_moy'] < 5): ?>
-                            <?php for($i = 1; $i <= (5 - $feedback['review_moy']); $i++): ?>
+                        <?php if($building['review_moy'] < 5): ?>
+                            <?php for($i = 1; $i <= (5 - $building['review_moy']); $i++): ?>
                                 <h5 class="card-title text-secondary">★</h5>
                             <?php endfor; ?>
                         <?php endif; ?>
                     </div>
-                    <h5 class="card-subtitle mb-2 text-muted"><?= $feedback['name'] ?></h5>
-                    <p class="card-text"><small class="text-body-secondary">Adresse : <?= $feedback['adress'] ?></small></p>
-                </div>
-            </a>
+                    <h5 class="card-subtitle mb-2 text-muted"><?= $building['name'] ?></h5>
+                    <p class="card-text"><small class="text-body-secondary">Adresse : <?= $building['adress'] ?></small></p>
+                </a>
+            </div>
         <?php endforeach; ?>
     </div>
     <?php if(!empty($isUserBuilding)) : ?>
