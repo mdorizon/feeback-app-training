@@ -3,7 +3,7 @@
     // connect to db
     $connectDatabase = new PDO("mysql:host=db;dbname=feedback-php", "root", "admin");
     // prepare request
-    $request = $connectDatabase->prepare("SELECT * FROM `building` ORDER BY review_moy DESC");
+    $request = $connectDatabase->prepare("SELECT * FROM building ORDER BY review_moy DESC LIMIT 48");
     // execute request
     $request->execute();
     // fetch all data from table posts
